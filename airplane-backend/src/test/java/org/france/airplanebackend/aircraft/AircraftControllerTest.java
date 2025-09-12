@@ -1,6 +1,7 @@
 package org.france.airplanebackend.aircraft;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.france.airplanebackend.pilot.Pilot;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,9 @@ public class AircraftControllerTest {
     @MockitoBean
     AircraftService aircraftService;
 
-    Aircraft ac1 = new Aircraft(1L, "C-130", "John");
-    Aircraft ac2 = new Aircraft(2L, "C-17", "Jim");
+    Pilot pilot = new Pilot(1L, "Andrew", "France", 29);
+    Aircraft ac1 = new Aircraft(1L, "C-130", pilot);
+    Aircraft ac2 = new Aircraft(2L, "C-17", pilot);
     ArrayList<Aircraft> acList = new ArrayList<>();
 
     @Autowired
@@ -47,7 +49,10 @@ public class AircraftControllerTest {
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.airframe").value("C-130"))
-                .andExpect(jsonPath("$.pilot").value("John"));
+                .andExpect(jsonPath("$.pilot.id").value(1L))
+                .andExpect(jsonPath("$.pilot.firstName").value("Andrew"))
+                .andExpect(jsonPath("$.pilot.lastName").value("France"))
+                .andExpect(jsonPath("$.pilot.age").value(29));
         Mockito.verify(aircraftService).saveAircraft(any(Aircraft.class));
 
     }

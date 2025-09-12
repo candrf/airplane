@@ -1,5 +1,6 @@
 package org.france.airplanebackend.aircraft;
 
+import org.france.airplanebackend.pilot.Pilot;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,8 +21,9 @@ class AircraftServiceTest {
     @InjectMocks
             AircraftService aircraftService;
 
-    Aircraft testAc = new Aircraft(1L,"C-130","John");
-    Aircraft testAc2 = new Aircraft(2L,"C-17","Bob");
+    Pilot pilot = new Pilot(1L, "Andrew", "France", 29);
+    Aircraft testAc = new Aircraft(1L,"C-130",pilot);
+    Aircraft testAc2 = new Aircraft(2L,"C-17",pilot);
     List<Aircraft> testList = new ArrayList<>();
 
 
